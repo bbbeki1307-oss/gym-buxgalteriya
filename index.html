@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zal buxgalteriyasi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>🏋️ Zal Buxgalteriyasi</h1>
+  <p class="subtitle">Oylik to‘lov nazorati</p>
+
+  <div class="form-box">
+    <input type="text" id="name" placeholder="Ism Familiya">
+    <input type="text" id="phone" placeholder="Telefon raqami">
+    <input type="number" id="fee" placeholder="Oylik to‘lov">
+    <input type="number" id="paid" placeholder="To‘langan summa">
+    <button onclick="addMember()">Qo‘shish</button>
+  </div>
+
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Ism</th>
+          <th>Telefon</th>
+          <th>Oylik</th>
+          <th>To‘langan</th>
+          <th>Qoldi</th>
+        </tr>
+      </thead>
+      <tbody id="memberList"></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
