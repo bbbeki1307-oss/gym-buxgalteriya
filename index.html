@@ -3,39 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zal buxgalteriyasi</title>
+  <title>Gym Manager Cloud</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-  <h1>🏋️ Zal Buxgalteriyasi</h1>
-  <p class="subtitle">Oylik to‘lov nazorati</p>
+  <header>
+    <h1>🏋️ GYM MANAGER CLOUD</h1>
+    <p>Admin va trenerlar uchun umumiy zal tizimi</p>
+  </header>
 
   <div class="form-box">
     <input type="text" id="name" placeholder="Ism Familiya">
-    <input type="text" id="phone" placeholder="Telefon raqami">
-    <input type="number" id="fee" placeholder="Oylik to‘lov">
-    <input type="number" id="paid" placeholder="To‘langan summa">
-    <button onclick="addMember()">Qo‘shish</button>
+    <input type="text" id="phone" placeholder="Telefon">
+    <input type="number" id="fee" placeholder="Oylik">
+    <input type="number" id="paid" placeholder="To'langan">
+    <button onclick="addMember()">➕ Qo'shish</button>
   </div>
 
-  <div class="table-box">
-    <table>
-      <thead>
-        <tr>
-          <th>Ism</th>
-          <th>Telefon</th>
-          <th>Oylik</th>
-          <th>To‘langan</th>
-          <th>Qoldi</th>
-        </tr>
-      </thead>
-      <tbody id="memberList"></tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Ism</th>
+        <th>Telefon</th>
+        <th>Qoldi</th>
+        <th>Holat</th>
+        <th>Kun</th>
+        <th>Amal</th>
+      </tr>
+    </thead>
+    <tbody id="memberList"></tbody>
+  </table>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
