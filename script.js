@@ -2,13 +2,13 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.1.0/firebas
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB-k0E_GVJQm4rrNBlix6H6_sDmJR9YwoI",
-  authDomain: "gymmanagerpro-4ad64.firebaseapp.com",
-  projectId: "gymmanagerpro-4ad64",
-  storageBucket: "gymmanagerpro-4ad64.firebasestorage.app",
-  messagingSenderId: "78492683544",
-  appId: "1:78492683544:web:776b64598846b44253226d",
-  measurementId: "G-TC0Y5SP6SW"
+  apiKey: 'AIzaSyB-k0E_GVJQm4rrNBlix6H6_sDmJR9YwoI',
+  authDomain: 'gymmanagerpro-4ad64.firebaseapp.com',
+  projectId: 'gymmanagerpro-4ad64',
+  storageBucket: 'gymmanagerpro-4ad64.firebasestorage.app',
+  messagingSenderId: '78492683544',
+  appId: '1:78492683544:web:776b64598846b44253226d',
+  measurementId: 'G-TC0Y5SP6SW'
 };
 
 const app = initializeApp(firebaseConfig);
@@ -28,7 +28,7 @@ async function addMember() {
   const paid = Number(document.getElementById('paid').value);
 
   if (!name || !phone || !fee) {
-    alert('Ma'lumotlarni to'liq kiriting!');
+    alert('Maʼlumotlarni toʼliq kiriting!');
     return;
   }
 
@@ -47,13 +47,12 @@ async function addMember() {
 }
 
 window.removeMember = async function(id) {
-  if (!confirm('O'chirasizmi?')) return;
+  if (!confirm('Oʼchirasizmi?')) return;
   await deleteDoc(doc(db, 'members', id));
 };
 
 function renderTable() {
   const q = searchInput.value.toLowerCase();
-
   table.innerHTML = '';
 
   let totalIncome = 0;
@@ -73,7 +72,7 @@ function renderTable() {
 
       if (remaining <= 0) {
         statusClass = 'green';
-        statusText = 'TO'LANGAN';
+        statusText = 'TOʼLANGAN';
       } else {
         debtCount++;
       }
@@ -89,7 +88,7 @@ function renderTable() {
 
       if (days <= 0) {
         dayClass = 'red';
-        dayText = 'Muddati o'tgan';
+        dayText = 'Muddati oʼtgan';
       } else if (days <= 3) {
         dayClass = 'yellow';
       }
@@ -99,10 +98,10 @@ function renderTable() {
       row.innerHTML = `
         <td>${m.name}</td>
         <td>${m.phone}</td>
-        <td>${remaining.toLocaleString()} so'm</td>
-        <td class="${statusClass}">${statusText}</td>
-        <td class="${dayClass}">${dayText}</td>
-        <td><button class="delete-btn" onclick="removeMember('${m.id}')">🗑 O'chirish</button></td>
+        <td>${remaining.toLocaleString()} soʼm</td>
+        <td class='${statusClass}'>${statusText}</td>
+        <td class='${dayClass}'>${dayText}</td>
+        <td><button class='delete-btn' onclick='removeMember("${m.id}")'>🗑 Oʼchirish</button></td>
       `;
 
       table.appendChild(row);
