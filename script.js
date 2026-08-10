@@ -28,3 +28,11 @@ function addMember() {
   document.getElementById('fee').value = '';
   document.getElementById('paid').value = '';
 }
+const firebaseConfig = {
+  apiKey: "AIzaSyB-k0E_GVJQm4rrNBlix6H6_sDmJR9YwoI",
+  authDomain: "gymmanagerpro-4ad64.firebaseapp.com",
+  projectId: "gymmanagerpro-4ad64",
+  storageBucket: "gymmanagerpro-4ad64.firebasestorage.app",
+  messagingSenderId: "78492683544",
+  appId: "1:78492683544:web:776b64598846b44253226d"
+};
