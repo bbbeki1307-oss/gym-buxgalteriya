@@ -1,138 +1,125 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0f0f0f;
-  color: white;
-}
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js';
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px;
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyB-k0E_GVJQm4rrNBlix6H6_sDmJR9YwoI",
+  authDomain: "gymmanagerpro-4ad64.firebaseapp.com",
+  projectId: "gymmanagerpro-4ad64",
+  storageBucket: "gymmanagerpro-4ad64.firebasestorage.app",
+  messagingSenderId: "78492683544",
+  appId: "1:78492683544:web:776b64598846b44253226d",
+  measurementId: "G-TC0Y5SP6SW"
+};
 
-header {
-  text-align: center;
-  margin-bottom: 25px;
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-header h1 {
-  margin: 0;
-  font-size: 36px;
-}
+const table = document.getElementById('memberList');
+const searchInput = document.getElementById('search');
 
-header p {
-  color: #9e9e9e;
-}
+let allMembers = [];
 
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-  gap: 15px;
-  margin-bottom: 20px;
-}
+document.getElementById('addBtn').addEventListener('click', addMember);
 
-.card {
-  background: #1b1b1b;
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
-}
+async function addMember() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const fee = Number(document.getElementById('fee').value);
+  const paid = Number(document.getElementById('paid').value);
 
-.card h3 {
-  font-size: 30px;
-  margin: 0;
-  color: #4caf50;
-}
-
-.search-box input,
-.form-box input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #333;
-  border-radius: 10px;
-  background: #1b1b1b;
-  color: white;
-  box-sizing: border-box;
-}
-
-.search-box {
-  margin-bottom: 20px;
-}
-
-.form-box {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.form-box button {
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.form-box button:hover {
-  background: #388e3c;
-}
-
-.table-box {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: #1b1b1b;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-th, td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #2c2c2c;
-}
-
-th {
-  background: #222;
-}
-
-.green {
-  color: #4caf50;
-  font-weight: bold;
-}
-
-.red {
-  color: #f44336;
-  font-weight: bold;
-}
-
-.yellow {
-  color: #ffc107;
-  font-weight: bold;
-}
-
-.delete-btn {
-  background: #b71c1c;
-  border: none;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.delete-btn:hover {
-  background: #d32f2f;
-}
-
-@media(max-width:768px){
-  table {
-    font-size: 12px;
+  if (!name || !phone || !fee) {
+    alert('Ma'lumotlarni to'liq kiriting!');
+    return;
   }
+
+  await addDoc(collection(db, 'members'), {
+    name,
+    phone,
+    fee,
+    paid,
+    startDate: new Date().toISOString()
+  });
+
+  document.getElementById('name').value = '';
+  document.getElementById('phone').value = '';
+  document.getElementById('fee').value = '';
+  document.getElementById('paid').value = '';
 }
+
+window.removeMember = async function(id) {
+  if (!confirm('O'chirasizmi?')) return;
+  await deleteDoc(doc(db, 'members', id));
+};
+
+function renderTable() {
+  const q = searchInput.value.toLowerCase();
+
+  table.innerHTML = '';
+
+  let totalIncome = 0;
+  let debtCount = 0;
+
+  allMembers
+    .filter(m =>
+      m.name.toLowerCase().includes(q) ||
+      m.phone.toLowerCase().includes(q)
+    )
+    .forEach(m => {
+      const remaining = m.fee - m.paid;
+      totalIncome += m.paid;
+
+      let statusClass = 'red';
+      let statusText = 'QARZDOR';
+
+      if (remaining <= 0) {
+        statusClass = 'green';
+        statusText = 'TO'LANGAN';
+      } else {
+        debtCount++;
+      }
+
+      const start = new Date(m.startDate);
+      const end = new Date(start);
+      end.setDate(start.getDate() + 30);
+
+      const days = Math.ceil((end - new Date()) / (1000 * 60 * 60 * 24));
+
+      let dayClass = 'green';
+      let dayText = days + ' kun';
+
+      if (days <= 0) {
+        dayClass = 'red';
+        dayText = 'Muddati o'tgan';
+      } else if (days <= 3) {
+        dayClass = 'yellow';
+      }
+
+      const row = document.createElement('tr');
+
+      row.innerHTML = `
+        <td>${m.name}</td>
+        <td>${m.phone}</td>
+        <td>${remaining.toLocaleString()} so'm</td>
+        <td class="${statusClass}">${statusText}</td>
+        <td class="${dayClass}">${dayText}</td>
+        <td><button class="delete-btn" onclick="removeMember('${m.id}')">🗑 O'chirish</button></td>
+      `;
+
+      table.appendChild(row);
+    });
+
+  document.getElementById('totalMembers').innerText = allMembers.length;
+  document.getElementById('totalIncome').innerText = totalIncome.toLocaleString();
+  document.getElementById('debtCount').innerText = debtCount;
+}
+
+searchInput.addEventListener('input', renderTable);
+
+onSnapshot(collection(db, 'members'), snapshot => {
+  allMembers = snapshot.docs.map(d => ({
+    id: d.id,
+    ...d.data()
+  }));
+
+  renderTable();
+});
