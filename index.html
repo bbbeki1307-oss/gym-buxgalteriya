@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gym Manager Cloud</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -14,27 +14,48 @@
     <p>Admin va trenerlar uchun umumiy zal tizimi</p>
   </header>
 
-  <div class="form-box">
-    <input type="text" id="name" placeholder="Ism Familiya">
-    <input type="text" id="phone" placeholder="Telefon">
-    <input type="number" id="fee" placeholder="Oylik">
-    <input type="number" id="paid" placeholder="To'langan">
-    <button onclick="addMember()">➕ Qo'shish</button>
+  <div class="stats">
+    <div class="card">
+      <h3 id="totalMembers">0</h3>
+      <p>A'zolar</p>
+    </div>
+    <div class="card">
+      <h3 id="totalIncome">0</h3>
+      <p>Tushum</p>
+    </div>
+    <div class="card">
+      <h3 id="debtCount">0</h3>
+      <p>Qarzdor</p>
+    </div>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Ism</th>
-        <th>Telefon</th>
-        <th>Qoldi</th>
-        <th>Holat</th>
-        <th>Kun</th>
-        <th>Amal</th>
-      </tr>
-    </thead>
-    <tbody id="memberList"></tbody>
-  </table>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="🔍 Ism yoki telefon qidirish..." />
+  </div>
+
+  <div class="form-box">
+    <input type="text" id="name" placeholder="Ism Familiya" />
+    <input type="text" id="phone" placeholder="Telefon raqami" />
+    <input type="number" id="fee" placeholder="Oylik to'lov" />
+    <input type="number" id="paid" placeholder="To'langan summa" />
+    <button id="addBtn">➕ Qo'shish</button>
+  </div>
+
+  <div class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Ism</th>
+          <th>Telefon</th>
+          <th>Qoldi</th>
+          <th>Holat</th>
+          <th>Kun</th>
+          <th>Amal</th>
+        </tr>
+      </thead>
+      <tbody id="memberList"></tbody>
+    </table>
+  </div>
 </div>
 
 <script type="module" src="script.js"></script>
