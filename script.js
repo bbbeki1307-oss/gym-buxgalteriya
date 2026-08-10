@@ -1,5 +1,12 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js';
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  deleteDoc,
+  doc
+} from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB-k0E_GVJQm4rrNBlix6H6_sDmJR9YwoI',
@@ -7,8 +14,7 @@ const firebaseConfig = {
   projectId: 'gymmanagerpro-4ad64',
   storageBucket: 'gymmanagerpro-4ad64.firebasestorage.app',
   messagingSenderId: '78492683544',
-  appId: '1:78492683544:web:776b64598846b44253226d',
-  measurementId: 'G-TC0Y5SP6SW'
+  appId: '1:78492683544:web:776b64598846b44253226d'
 };
 
 const app = initializeApp(firebaseConfig);
@@ -28,15 +34,15 @@ async function addMember() {
   const paid = Number(document.getElementById('paid').value);
 
   if (!name || !phone || !fee) {
-    alert('Maʼlumotlarni toʼliq kiriting!');
+    alert('Malumotlarni toliq kiriting!');
     return;
   }
 
   await addDoc(collection(db, 'members'), {
-    name,
-    phone,
-    fee,
-    paid,
+    name: name,
+    phone: phone,
+    fee: fee,
+    paid: paid,
     startDate: new Date().toISOString()
   });
 
@@ -47,7 +53,7 @@ async function addMember() {
 }
 
 window.removeMember = async function(id) {
-  if (!confirm('Oʼchirasizmi?')) return;
+  if (!confirm('Ochirasizmi?')) return;
   await deleteDoc(doc(db, 'members', id));
 };
 
@@ -72,7 +78,7 @@ function renderTable() {
 
       if (remaining <= 0) {
         statusClass = 'green';
-        statusText = 'TOʼLANGAN';
+        statusText = 'TOLANGAN';
       } else {
         debtCount++;
       }
@@ -88,21 +94,20 @@ function renderTable() {
 
       if (days <= 0) {
         dayClass = 'red';
-        dayText = 'Muddati oʼtgan';
+        dayText = 'Muddati otgan';
       } else if (days <= 3) {
         dayClass = 'yellow';
       }
 
       const row = document.createElement('tr');
 
-      row.innerHTML = `
-        <td>${m.name}</td>
-        <td>${m.phone}</td>
-        <td>${remaining.toLocaleString()} soʼm</td>
-        <td class='${statusClass}'>${statusText}</td>
-        <td class='${dayClass}'>${dayText}</td>
-        <td><button class='delete-btn' onclick='removeMember("${m.id}")'>🗑 Oʼchirish</button></td>
-      `;
+      row.innerHTML =
+        '<td>' + m.name + '</td>' +
+        '<td>' + m.phone + '</td>' +
+        '<td>' + remaining.toLocaleString() + ' som</td>' +
+        '<td class="' + statusClass + '">' + statusText + '</td>' +
+        '<td class="' + dayClass + '">' + dayText + '</td>' +
+        '<td><button class="delete-btn" onclick="removeMember(\\'' + m.id + '\\')">Ochirish</button></td>';
 
       table.appendChild(row);
     });
